@@ -8,6 +8,11 @@ type Config struct {
 	CurrentUserName string `json:"current_user_name"`
 }
 
+func (cfg *Config) SetUser(userName string) error {
+	cfg.CurrentUserName = userName
+	return write(*cfg)
+}
+
 func getConfigFilePath() (string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
