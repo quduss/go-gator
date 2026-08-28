@@ -1,3 +1,7 @@
+package main
+
+import "errors"
+
 type command struct {
 	Name string
 	Args []string
