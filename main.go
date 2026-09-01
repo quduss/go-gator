@@ -1,15 +1,18 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"os"
 
 	_ "github.com/lib/pq"
 	"github.com/quduss/go-gator/internal/config"
+	"github.com/quduss/go-gator/internal/database"
 )
 
 type state struct {
 	cfg *config.Config
+	db  *database.Queries
 }
 
 func main() {
@@ -17,8 +20,16 @@ func main() {
 	if err != nil {
 		log.Fatalf("error reading config: %v", err)
 	}
+	db, err := sql.Open("postgres", cfg.DBURL)
+	if err != nil {
+		log.Fatalf("error connecting to db: %v", err)
+	}
+	defer db.Close()
+	dbQueries := database.New(db)
+
 	programState := &state{
 		cfg: &cfg,
+		db:  dbQueries,
 	}
 
 	cmds := commands{
