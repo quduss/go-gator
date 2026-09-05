@@ -36,3 +36,8 @@ func handlerFollow(s *state, cmd command) error {
 	printFeedFollow(ffRow.UserName, ffRow.FeedName)
 	return nil
 }
+
+func printFeedFollow(username, feedname string) {
+	fmt.Printf("* User:          %s\n", username)
+	fmt.Printf("* Feed:          %s\n", feedname)
+}
